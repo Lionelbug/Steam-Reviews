@@ -98,10 +98,6 @@ root.mainloop()
 print(app_id_global) # Récupère le texte du Label
 
 #===Extract reviews===
-"""import requests
-import time
-import csv
-from datetime import datetime"""
 from extract_reviews import get_steam_reviews, save_reviews_to_csv
 
 # un exemple

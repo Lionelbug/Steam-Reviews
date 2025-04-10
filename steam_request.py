@@ -104,7 +104,6 @@ import csv
 from datetime import datetime"""
 from extract_reviews import get_steam_reviews, save_reviews_to_csv
 
-# un exemple
-app_id = app_id_global # Elden Ring
-reviews = get_steam_reviews(app_id=app_id, num_reviews=500)
-save_reviews_to_csv(reviews, filename=f'{game_name}.csv'.replace(" ", "_"))
+app_id = app_id_global 
+reviews = get_steam_reviews(app_id=app_id, num_reviews=1000)
+save_reviews_to_csv(reviews, filename=f'data/raw/{game_name}.csv'.replace(" ", "_"))

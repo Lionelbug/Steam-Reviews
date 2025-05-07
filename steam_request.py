@@ -106,4 +106,4 @@ from extract_reviews import get_steam_reviews, save_reviews_to_csv
 
 app_id = app_id_global 
 reviews = get_steam_reviews(app_id=app_id, num_reviews=1000)
-save_reviews_to_csv(reviews, filename=f'data/raw/{game_name}.csv'.replace(" ", "_"))
+save_reviews_to_csv(reviews, filename=f'data/{game_name}.csv'.replace(" ", "_"))

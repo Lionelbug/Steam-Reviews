@@ -62,7 +62,7 @@ def ponct(text:str) -> str:
 # Organiser le datdaset (on focaliser sur le tag et comment)
 
 def organisation(df:pd.DataFrame) -> pd.DataFrame:
-    df['label'] = pd.Categorical(df.Tag, ordered=True).codes
+    df['label'] = pd.Categorical(df.tag, ordered=True).codes
     df.rename(columns={'label': 'labels', 'comment': 'text'}, inplace=True)
     return df[['text', 'labels']]
 
@@ -86,8 +86,8 @@ def split(df:pd.DataFrame) -> pd.DataFrame:
 
     return train_df, val_df, test_df
 
-if __name__ == 'main':
-    path = 'data/'
+if __name__ == '__main__':
+    path = 'data'
     df_all = combine(path)
     df_fr = filter(df_all)
     df = organisation(df_fr)

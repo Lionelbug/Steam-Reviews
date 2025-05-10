@@ -4,10 +4,6 @@ import webbrowser
 import requests
 from bs4 import BeautifulSoup
 import re
-import time
-import csv
-from datetime import datetime
-
 
 app_id_global = None
 game_name = None

@@ -52,7 +52,7 @@ def save_reviews_to_csv(reviews, filename='steam_reviews.csv'):
 
             writer.writerow([voted, votes_up, score, content, time_str, playtime, early_access])
 
-if __name__ == 'main':
+if __name__ == '__main__':
     # un exemple
     app_id = '1245620'  # Elden Ring
     reviews = get_steam_reviews(app_id=app_id, num_reviews=200)

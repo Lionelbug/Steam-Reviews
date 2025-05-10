@@ -61,8 +61,19 @@ def ponct(text:str) -> str:
 
 # Organiser le datdaset (on focaliser sur le tag et comment)
 
-def organisation(df:pd.DataFrame) -> pd.DataFrame:
+def map_to_categorical(df:pd.DataFrame) -> pd.DataFrame:
+    import json
+    
     df['label'] = pd.Categorical(df.tag, ordered=True).codes
+    
+    label2Index = {row['tag']: row['label'] for idx, row in df.iterrows()}
+    index2label = {row['label']: row['tag'] for idx, row in df.iterrows()}
+    with open("label_mappings.json", "w", encoding="utf-8") as f:
+        json.dump({
+            "label2Index": label2Index,
+            "index2label": index2label
+        }, f, ensure_ascii=False, indent=2)
+    
     df.rename(columns={'label': 'labels', 'comment': 'text'}, inplace=True)
     return df[['text', 'labels']]
 
@@ -90,5 +101,5 @@ if __name__ == '__main__':
     path = 'data'
     df_all = combine(path)
     df_fr = filter(df_all)
-    df = organisation(df_fr)
+    df = map_to_categorical(df_fr)
     split(df)

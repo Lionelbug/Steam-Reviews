@@ -1,0 +1,10 @@
+{
+  "label2Index": {
+    "recommende": 1,
+    "not recommende": 0
+  },
+  "index2label": {
+    "1": "recommende",
+    "0": "not recommende"
+  }
+}

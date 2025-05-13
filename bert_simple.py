@@ -51,7 +51,7 @@ class BERTDataset(Dataset):
             'attention_mask': encoding['attention_mask'].squeeze(0),
             'labels': torch.tensor(self.labels[idx], dtype=torch.long)
         }
-    
+
 # Créer Dataset et DataLoader
 train_dataset = BERTDataset(df_train, tokenizer, SEQ_LEN)
 val_dataset   = BERTDataset(df_val, tokenizer, SEQ_LEN)
@@ -167,7 +167,7 @@ def evaluate(model, loader):
 
             y_true.extend(labels.cpu().tolist())
             y_pred.extend(preds.cpu().tolist())
-    
+
     # Mapper les indices aux noms des étiquettes
     y_true = [index2label[i] for i in y_true]
     y_pred = [index2label[i] for i in y_pred]

@@ -4,9 +4,24 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from transformers import CamembertTokenizer, CamembertModel
 from sklearn.metrics import confusion_matrix, classification_report
+import seaborn as sns
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import json
+
+# enregistrer le modèle
+def save_model(model, path="model/bert.pt"):
+    torch.save(model.state_dict(), path)
+    print(f"Modèle enregistré dans {path}")
+
+# charger le modèle
+def load_model(BERTClassifier, num_classes, path:str):
+    model = BERTClassifier(num_classes=num_classes)
+    model.load_state_dict(torch.load(path, map_location=DEVICE))
+    model.to(DEVICE)
+    model.eval()
+    print(f"Modèle chargé depuis : {path}")
+    return model
 
 # Hyperparamètres
 SEQ_LEN = 128
@@ -153,6 +168,18 @@ def plot_graph(train, val, title):
 plot_graph(train_accs, val_accs, "Accuracy")
 
 # Évaluation
+def plot_confusion_matrix(y_true, y_pred, labels, title="Confusion Matrix"):
+    cm = confusion_matrix(y_true, y_pred, labels=labels)
+    
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+                xticklabels=labels, yticklabels=labels)
+    plt.title(title)
+    plt.xlabel("Prédictions")
+    plt.ylabel("Véritables")
+    plt.tight_layout()
+    plt.show()
+
 def evaluate(model, loader):
     model.eval()
     y_true, y_pred = [], []
@@ -167,12 +194,12 @@ def evaluate(model, loader):
 
             y_true.extend(labels.cpu().tolist())
             y_pred.extend(preds.cpu().tolist())
-
+    
     # Mapper les indices aux noms des étiquettes
     y_true = [index2label[i] for i in y_true]
     y_pred = [index2label[i] for i in y_pred]
-
-    print("Confusion Matrix:\n", confusion_matrix(y_true, y_pred))
+    labels = list(label2Index.keys()) 
+    plot_confusion_matrix(y_true, y_pred, labels)
     print("\nClassification Report:\n", classification_report(y_true, y_pred))
 
     return y_true, y_pred

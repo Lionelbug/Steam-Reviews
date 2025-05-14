@@ -98,7 +98,7 @@ def split(df:pd.DataFrame) -> pd.DataFrame:
     return train_df, val_df, test_df
 
 if __name__ == '__main__':
-    path = 'data/raw'
+    path = 'data'
     df_all = combine(path)
     df_fr = filter(df_all)
     df = map_to_categorical(df_fr)
